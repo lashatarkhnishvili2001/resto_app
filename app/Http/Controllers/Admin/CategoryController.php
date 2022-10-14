@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryStoreRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\CategoryStoreRequest;
 
 class CategoryController extends Controller
 {
@@ -45,9 +45,9 @@ class CategoryController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'image' => $image
-        ]); 
+        ]);
 
-        return to_route('admin.categories.index');
+        return to_route('admin.categories.index')->with('success', 'Category created successfully.');
     }
 
     /**
@@ -86,7 +86,7 @@ class CategoryController extends Controller
             'description' => 'required'
         ]);
         $image = $category->image;
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             Storage::delete($category->image);
             $image = $request->file('image')->store('public/categories');
         }
@@ -96,7 +96,7 @@ class CategoryController extends Controller
             'description' => $request->description,
             'image' => $image
         ]);
-        return to_route('admin.categories.index');
+        return to_route('admin.categories.index')->with('success', 'Category updated successfully.');
     }
 
     /**
@@ -108,8 +108,9 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         Storage::delete($category->image);
+        $category->menus()->detach();
         $category->delete();
 
-        return to_route('admin.categories.index');
+        return to_route('admin.categories.index')->with('danger', 'Category deleted successfully.');
     }
 }

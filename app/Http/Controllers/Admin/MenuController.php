@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Menu;
-use App\Models\Category;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MenuStoreRequest;
+use App\Models\Category;
+use App\Models\Menu;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
@@ -18,8 +18,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::all();;
-        return view('admin.menus.index', compact('menus'));      
+        $menus = Menu::all();
+        return view('admin.menus.index', compact('menus'));
     }
 
     /**
@@ -37,7 +37,7 @@ class MenuController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response 
+     * @return \Illuminate\Http\Response
      */
     public function store(MenuStoreRequest $request)
     {
@@ -48,25 +48,15 @@ class MenuController extends Controller
             'description' => $request->description,
             'image' => $image,
             'price' => $request->price
-        ]); 
+        ]);
 
-        if($request->has('categories')){
+        if ($request->has('categories')) {
             $menu->categories()->attach($request->categories);
         }
 
-        return to_route('admin.menus.index');
+        return to_route('admin.menus.index')->with('success', 'Menu created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -95,7 +85,7 @@ class MenuController extends Controller
             'price' => 'required'
         ]);
         $image = $menu->image;
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             Storage::delete($menu->image);
             $image = $request->file('image')->store('public/menus');
         }
@@ -107,11 +97,10 @@ class MenuController extends Controller
             'price' => $request->price
         ]);
 
-        if($request->has('categories')){
+        if ($request->has('categories')) {
             $menu->categories()->sync($request->categories);
         }
-
-        return to_route('admin.menus.index');
+        return to_route('admin.menus.index')->with('success', 'Menu updated successfully.');
     }
 
     /**
@@ -123,8 +112,8 @@ class MenuController extends Controller
     public function destroy(Menu $menu)
     {
         Storage::delete($menu->image);
+        $menu->categories()->detach();
         $menu->delete();
-
-        return to_route('admin.menus.index');
+        return to_route('admin.menus.index')->with('danger', 'Menu deleted successfully.');
     }
 }

@@ -20,8 +20,11 @@
                 <label for="name" class="block text-sm font-medium text-gray-700"> name</label>
                   <div class="mt-1">
                       <input type="text" id="name" name="name" value="{{  $menu->name }}"
-                        class="block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 ">
+                        class="block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 @error('name') border-red-400 @enderror">
                   </div>
+                  @error('name')
+                  <div class="text-sm text-red-400">{{ $message }}</div>
+              @enderror
               </div>
               <div class="sm:col-span-6">
                 <label for="image" class="block text-sm font-medium text-gray-700"> image</label>
@@ -30,24 +33,33 @@
                 </div>
                   <div class="mt-1">
                       <input type="file" id="image" name="image"
-                        class="block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 ">
+                        class="block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 @error('image') border-red-400 @enderror">
                   </div>
+                  @error('image')
+                            <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
               </div>
               <div class="sm:col-span-6">
                 <label for="price" class="block text-sm font-medium text-gray-700"> price</label>
                   <div class="mt-1">
                       <input type="number" min="0.00" max="10000.00" step="0.01" id="price" name="price" value="{{$menu->price}}"
-                        class="block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 ">
+                        class="block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 @error('price') border-red-400 @enderror">
                   </div>
+                  @error('number')
+                            <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
               </div>
               <div class="sm:col-span-6 pt-5">
                 <label for="boby" class="block text-sm font-medium text-gray-700">description</label>
                   <div class="mt-1">
-                    <textarea class=" shadow-sm focus:rind-indigo-500 appearance-none bg-white border border-gray-400 rounded-md py-2  "
+                    <textarea class=" shadow-sm focus:rind-indigo-500 appearance-none bg-white border border-gray-400 rounded-md py-2  @error('description') border-red-400 @enderror"
                     id="boby" name="description"
                     rows="3" 
                     wire:model.lazy="boby"> {{$menu->description}}</textarea>
                   </div>
+                  @error('description')
+                            <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
               </div>
               <div class="sm:col-span-6 pt-5">
                 <label for="boby" class="block text-sm font-medium text-gray-700">categories</label>

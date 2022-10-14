@@ -19,15 +19,21 @@
                         <label for="name" class="block text-sm font-medium text-gray-700"> Name</label>
                         <div class="mt-1">
                             <input type="text" id="name" name="name"
-                                class="block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 ">
-
+                                class="block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 @error('name') border-red-400 @enderror ">
                         </div>
+                        @error('name')
+                            <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="sm:col-span-6">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="image">image</label>
                         <div class="mt-1">
-                          <input class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="image" type="file" name="image" >
+                          <input class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 @error('image') border-red-400 @enderror"
+                            id="image" type="file" name="image"  >
                         </div>
+                        @error('image')
+                          <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="sm:col-span-6 pt-5">
                     <label for="description" class="form-label inline-block mb-2 text-gray-700"
@@ -49,13 +55,16 @@
                         transition
                         ease-in-out
                         m-0
-                        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+                        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none @error('description') border-red-400 @enderror
                       "
                       id="description " name="description"
                       rows="3"
                       placeholder="Your message"
                     ></textarea>    
                   </div>
+                  @error('description')
+                    <div class="text-sm text-red-400">{{ $message }}</div>
+                  @enderror
                   </div>
                   
                   <div class="mt-6 p-4">

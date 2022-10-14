@@ -66,7 +66,26 @@
                         </div>
                     </nav>
             </div>
+            
             <main class="m-2 p-8 w-full">
+                <div>
+                    @if (session()->has('danger'))
+                        <div class="p-4 mb-4 text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                            role="alert">
+                            <span class="font-medium">Danger alert! </span> {{ session()->get('danger') }}
+                        </div>
+                    @endif
+                    @if (session()->has('success'))
+                    <div class="bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700 mb-3" role="alert">
+                        <span class="font-medium">Success alert! </span> {{ session()->get('success') }}
+                    </div>
+                    @endif
+                    @if (session()->has('warning'))
+                    <div class="bg-yellow-100 rounded-lg py-5 px-6 mb-4 text-base text-yellow-700 mb-3" role="alert">
+                        <span class="font-medium">warning alert! </span> {{ session()->get('warning') }}
+                    </div>
+                    @endif
+                </div>
                 {{ $slot }}
             </main>
         </div>
