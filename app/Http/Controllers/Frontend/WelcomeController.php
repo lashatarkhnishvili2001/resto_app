@@ -17,4 +17,5 @@ class WelcomeController extends Controller
     public function thankyou(){
         return view('thankyou');
     }
+    
 }
